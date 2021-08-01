@@ -3,6 +3,8 @@
 using namespace std;
 
 int main() {
-    cout << "Hello, World!" << endl;
+    string filename;
+    getline(cin,filename);
+    cout<<filename<<endl;
     return 0;
 }

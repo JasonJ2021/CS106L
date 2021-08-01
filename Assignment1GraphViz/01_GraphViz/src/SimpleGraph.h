@@ -107,7 +107,7 @@ private:
 
 
 // my functions
-SimpleGraph getGraph();
+void readGraph(const char *filename , SimpleGraph &graph);
 void positionInit(SimpleGraph &graph);
 void computeForce(SimpleGraph &graph);
 /** Redefinition: main

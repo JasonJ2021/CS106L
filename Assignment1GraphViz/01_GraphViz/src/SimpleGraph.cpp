@@ -183,12 +183,7 @@ int getInteger()
         }
     }
 }
-std::string Getline()
-{
-    std::string result;
-    getline(std::cin, result);
-    return result;
-}
+
 int GetInteger()
 {
 
@@ -196,14 +191,15 @@ int GetInteger()
     result = getInteger();
     return result;
 }
-SimpleGraph getGraph()
+void readGraph(const char *filename , SimpleGraph &graph)
 {
-    string filename = Getline();
-    string root = "../res/" + filename;
-    std::ifstream graphstream(root);
+    std::ifstream graphstream(filename);
+    if (!graphstream.is_open()) {
+        std::cerr << "Cannot open file: " << filename << std::endl;
+        exit(1);
+    }
     int nodes;
     graphstream >> nodes;
-    SimpleGraph graph;
     for (int i = 0; i < nodes; i++)
     {
         struct Node node;
@@ -221,7 +217,6 @@ SimpleGraph getGraph()
         edge.end = end;
         graph.edges.push_back(edge);
     }
-    return graph;
 }
 void positionInit(SimpleGraph &graph)
 {
@@ -235,14 +230,19 @@ void positionInit(SimpleGraph &graph)
 void computeForce(SimpleGraph &graph)
 {
     int n = graph.nodes.size();
-    double deltax[n] = {};
-    double deltay[n] = {};
-
+    double deltax[n];
+    double deltay[n];
+    for(int i = 0 ; i < n ; i++){
+        deltax[i] = 0 ;
+    }
+    for(int i = 0 ; i < n ; i++){
+        deltay[i] = 0 ;
+    }
     double krel = 0.001;
     double karc = 0.001;
     for (int i = 0; i < n; i++)
     {
-        for (int j = i + 1; j < n; k++)
+        for (int j = i + 1; j < n; j++)
         {
             double F = krel / sqrt(pow(graph.nodes[j].y - graph.nodes[i].y, 2) + pow(graph.nodes[j].x - graph.nodes[i].x, 2));
             double angle = atan2(graph.nodes[j].y - graph.nodes[i].y, graph.nodes[j].x - graph.nodes[i].x);
