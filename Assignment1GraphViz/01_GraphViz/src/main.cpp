@@ -7,8 +7,6 @@ void Welcome();
 
 // Main method
 int main() {
-    char c = getchar();
-    cout<<c<<endl;
     Welcome();
     return 0;
 }

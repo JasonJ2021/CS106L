@@ -9,9 +9,6 @@ using std::cout;            using std::endl;
 using std::cerr;            using std::string;
 using std::unordered_map;   using std::unordered_set;
 
-
-
-
 /*
  * You should delete the code in this function and
  * fill it in with your code from part A of the assignment.
@@ -19,8 +16,8 @@ using std::unordered_map;   using std::unordered_set;
  * If you used any helper functions, just put them above this function.
  */
 unordered_set<string> findWikiLinks(const string& inp) {
-    // TODO: Remove all the code in this function and
-    //       fill in with code from part A of assignmetn
+    // TODO: Remove all the code in this function and fill
+    //       in with your findWikiLinks code from part A
 
     errorPrint();
     errorPrint("If you are seeing this message, you haven't implemented");

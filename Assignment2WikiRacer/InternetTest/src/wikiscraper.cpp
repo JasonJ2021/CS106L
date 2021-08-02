@@ -19,15 +19,15 @@ WikiScraper::WikiScraper() {
         cout << "Didn't make" << endl;
     } */
     (void)getPageSource("Main_Page");
-#ifdef _WIN32
-    // define something for Windows
-    system("cls");
-    cout << string(5, '-') << "> Windows clear" << endl;
-#else
-    // define it for a Unix machine
-    system("clear");
-    cout << string(5, '-') << "> Unix clear" << endl;
-#endif
+//#ifdef _WIN32
+//    // define something for Windows
+//    system("cls");
+//    cout << string(5, '-') << "> Windows clear" << endl;
+//#else
+//    // define it for a Unix machine
+//    system("clear");
+//    cout << string(5, '-') << "> Unix clear" << endl;
+//#endif
     cout << endl;
 
 }

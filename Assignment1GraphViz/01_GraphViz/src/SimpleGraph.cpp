@@ -229,33 +229,31 @@ void positionInit(SimpleGraph &graph)
 }
 void computeForce(SimpleGraph &graph)
 {
-    int n = graph.nodes.size();
-    double deltax[n];
-    double deltay[n];
-    for(int i = 0 ; i < n ; i++){
-        deltax[i] = 0 ;
-    }
-    for(int i = 0 ; i < n ; i++){
-        deltay[i] = 0 ;
-    }
+    size_t n = graph.nodes.size();
+    vector<double> deltax(n,0);
+    vector<double> deltay(n,0);
     double krel = 0.001;
     double karc = 0.001;
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n - 1 ; i++)
     {
-        for (int j = i + 1; j < n; j++)
+        for (size_t j = i + 1; j < n; j++)
         {
-            double F = krel / sqrt(pow(graph.nodes[j].y - graph.nodes[i].y, 2) + pow(graph.nodes[j].x - graph.nodes[i].x, 2));
-            double angle = atan2(graph.nodes[j].y - graph.nodes[i].y, graph.nodes[j].x - graph.nodes[i].x);
-            deltax[i] -= F * cos(angle);
-            deltay[i] -= F * sin(angle);
-            deltax[j] += F * cos(angle);
-            deltay[j] += F * sin(angle);
+            double x0 = graph.nodes.at(i).x;
+            double y0 = graph.nodes.at(i).y;
+            double x1 = graph.nodes.at(j).x;
+            double y1 = graph.nodes.at(j).y;
+            double fRepel = krel / (sqrt((y1 - y0) * (y1 - y0) + (x1 - x0) * (x1 - x0)));
+            double angle = atan2(y1-y0,x1 - x0);
+            deltax[i] -= fRepel*cos(angle);
+            deltay[i] -= fRepel*sin(angle);
+            deltax[j] += fRepel*cos(angle);
+            deltay[j] += fRepel*sin(angle);
         }
     }
     for (int i = 0; i < graph.edges.size(); i++)
     {
         double x0 = graph.nodes[graph.edges[i].start].x;
-        double y0 = graph.nodes[graph.edges[i].start].x;
+        double y0 = graph.nodes[graph.edges[i].start].y;
         double x1 = graph.nodes[graph.edges[i].end].x;
         double y1 = graph.nodes[graph.edges[i].end].y;
         double F = karc * (pow(y1 - y0, 2) + pow(x1 - x0, 2));
@@ -265,7 +263,7 @@ void computeForce(SimpleGraph &graph)
         deltax[graph.edges[i].end] -= F * cos(angle);
         deltay[graph.edges[i].end] -= F * sin(angle);
     }
-    for(int i = 0 ; i < n ; i++){
+    for(size_t i = 0 ; i < n ; i++){
         graph.nodes[i].x +=deltax[i];
         graph.nodes[i].y +=deltay[i];
     }

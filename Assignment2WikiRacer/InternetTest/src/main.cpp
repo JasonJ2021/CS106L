@@ -28,7 +28,7 @@ int main() {
        cout <<  w.getPageSource("Mathematics") <<  endl;
         waitForInput();
        cout << "========================" <<  endl;
-       cout <<  w.getPageSource("Stanford_Universitya") <<  endl;
+       cout <<  w.getPageSource("Stanford_University") <<  endl;
        waitForInput();
        cout << "Done!" << endl;
        return 0;
