@@ -1,10 +1,12 @@
 #include <iostream>
-#include "hello.h"
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 int main() {
-    string filename;
-    getline(cin,filename);
-    cout<<filename<<endl;
-    return 0;
+    vector<int> v = {1,24,6,8,13,3,5,10};
+    sort(v.begin(),v.end(),[](int i , int j )->bool{return i >j;});
+    for(auto thing : v){
+        cout << thing<<endl;
+    }
 }
