@@ -16,16 +16,24 @@ using std::unordered_map;   using std::unordered_set;
  * If you used any helper functions, just put them above this function.
  */
 unordered_set<string> findWikiLinks(const string& inp) {
-    // TODO: Remove all the code in this function and fill
-    //       in with your findWikiLinks code from part A
-
-    errorPrint();
-    errorPrint("If you are seeing this message, you haven't implemented");
-    errorPrint("the find_wiki_links method in wikiscraper.cpp.");
-    errorPrint();
-    cout << endl;
-    return {};
-
+    unordered_set<string> result;
+//    <a href="/wiki/Marine_mammal" title="Marine mammal">marine mammal</a>
+    string pre = "href=";
+    auto start = inp.begin();
+    auto end = inp.end();
+    while(start != end){
+        auto curr = std::search(start,end,pre.begin(),pre.end());
+        if(curr == end)break;
+        curr+=6; // find the start;
+        auto endlink = std::find(curr , end , '"');
+        if(string(curr,curr+6) == "/wiki/" && std::all_of(curr+6,endlink,[](char ch){
+        return ch!='#' && ch !=':';
+    })){
+           result.insert(string(curr+6 , endlink));
+        }
+        start = curr+1;
+    }
+    return result;
 }
 
 

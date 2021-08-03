@@ -5,6 +5,7 @@
 #include <vector>
 #include <numeric>
 #include <cmath>
+#include <algorithm>
 
 using std::cout;    using std::cin;
 using std::endl;    using std::string;

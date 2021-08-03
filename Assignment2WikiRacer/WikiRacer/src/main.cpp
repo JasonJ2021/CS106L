@@ -6,6 +6,9 @@
 #include <queue>
 #include <unordered_map>
 #include "wikiscraper.h"
+#include <utility>
+#include <set>
+#include <algorithm>
 
 using std::cout;            using std::endl;
 using std::ifstream;        using std::stringstream;
@@ -36,7 +39,50 @@ vector<string> findWikiLadder(const string& start_page, const string& end_page) 
     //       3. Finally, implement this function per Part B in the handout!
     //
     //                Best of luck!
-    return {"File reading works!", start_page, end_page};
+    WikiScraper scraper;
+    auto endlink = scraper.getLinkSet(end_page);
+    unordered_set<string> hasVisited;
+    auto cmpfn = [&](vector<string> ladder1 , vector<string> ladder2){
+      string page1 = ladder1[ladder1.size()-1];
+      string page2 = ladder2[ladder2.size()-1];
+      auto set1 = scraper.getLinkSet(page1);
+      auto set2 = scraper.getLinkSet(page2);
+      int num1 = 0;
+      int num2 = 0;
+      for(auto thing :set1){
+          if(endlink.find(thing) != endlink.end()){
+              num1++;
+          }
+      }
+      for(auto thing :set2){
+          if(endlink.find(thing) != endlink.end()){
+              num2++;
+          }
+      }
+      return num1<num2;
+    };
+    std::priority_queue<vector<string>,vector<vector<string>>,decltype (cmpfn)>ladderQueue(cmpfn);
+    vector<string> starter = {start_page};
+    ladderQueue.push(starter);
+    hasVisited.insert(start_page);
+    while(!ladderQueue.empty()){
+        vector<string> temp = ladderQueue.top(); //c++pop() has no return value
+        ladderQueue.pop();
+        auto links = scraper.getLinkSet(temp[temp.size()-1]);
+        if(links.find(end_page) != links.end()){
+                temp.push_back(end_page);
+                return temp;
+        }
+        for(auto thing : links){
+            if(hasVisited.find(thing) == hasVisited.end()){
+                hasVisited.insert(thing);
+                vector<string> copyvec = temp;
+                copyvec.push_back(thing);
+                ladderQueue.push(copyvec);
+            }
+        }
+    }
+    return {};
 }
 
 int main() {
@@ -53,13 +99,19 @@ int main() {
     //       and append that vector to outputLadders.
 
     // Write code here
+    ifstream fileopen(filename);
+    int pairs;
+    fileopen>>pairs;
+    cout<<pairs;
+    for(int i = 0 ;i<pairs;i++){
+        string start_page ,end_page;
+        fileopen>>start_page>>end_page;
+        outputLadders.push_back(findWikiLadder(start_page,end_page));
+    }
 
-
-
-    /*
-     * Print out all ladders in outputLadders.
-     * We've already implemented this for you!
-     */
+//     * Print out all ladders in outputLadders.
+//     * We've already implemented this for you!
+//     */
     for (auto& ladder : outputLadders) {
         if(ladder.empty()) {
             cout << "No ladder found!" << endl;
