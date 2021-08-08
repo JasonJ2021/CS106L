@@ -1,0 +1,33 @@
+Assignment 2: STL HashMap (short answer questions)
+Names:
+
+1.In the rehash() function, the for-each loop contains an auto&. What is the deduced type of that auto, and why the ampersand necessary?
+the first question:the deduced type of that auto is node *
+the second question:1.improve the efficiency 2.clear the old buckets_array
+2.STL containers store elements of type value_type,
+and for your HashMap this value_type is a std::pair<const K, M>.
+What would be the problem in the HashMap class if value_type were instead std::pair<K, M>?
+
+it will lost the information stored in the pair before.
+
+
+3.std::find会从begin() 寻找到 end()直到找到为之
+而m.find(k)是常数级别的
+
+4.
+析构函数调用了clear()
+5.
+把构造函数声明为private这样只能在hashmap中调用，此时已经规定了ValueTYpe
+他们是friend
+6.
+通过把_node = _node.next() 移动链表实现next;return *this 此时的operator
+检查是否已经到了一条链表的末端(_node == nullprt)如果到了将node移动到下一条链表
+
+7.
+[]还有一个加入默认M值的功能，因此不能是const member function
+
+8.
+
+9.
+
+10.
